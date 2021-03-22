@@ -10,11 +10,9 @@ function hideOtherDropdowns(dropdownList, clickedMenu) {
   });
 }
 
-exports.initNavbar = function (navbarId) {
-  const navbarElm = document.getElementById(navbarId);
-
-  if (!navbarElm) {
-    throw new Error(`initNavbar: navbarElm '#${navbarId}' not found`);
+exports.initNavbar = function (navbarElm) {
+  if (!navbarElm instanceof HTMLElement) {
+    throw new Error(`initNavbar: navbarElm is a HTMLElement`);
   }
 
   const menuToggle = navbarElm.querySelector('.is-toggle');
@@ -29,7 +27,9 @@ exports.initNavbar = function (navbarId) {
     throw new Error(`initNavbar: 'nav' Element not found`);
   }
 
-  menuToggle.addEventListener('click', () => {
+  menuToggle.addEventListener('click', (event) => {
+    event.preventDefault();
+
     menuToggle.classList.toggle('visible');
 
     const link = menuToggle.querySelector('a');
